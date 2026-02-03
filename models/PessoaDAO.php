@@ -11,7 +11,7 @@
 		        // die;
 
                 //preparar a frase
-                $stm = $this->prepare($sql);
+                $stm = $this->db->prepare($sql);
                 $stm->bindValue(1, $pessoa->getNome());
 
                 $stm->execute();
@@ -23,6 +23,37 @@
                 $this->db = null;
                 return "Problema ao cadastrar pessoa";
             }
+        }
+
+        public function remover ($pessoa){
+            $sql = "DELETE FROM pessoa WHERE nome = ?";
+            try{
+                // teste
+                // var_dump($this->db);
+		        // die;
+
+                //preparar a frase
+                $stm = $this->db->prepare($sql);
+                $stm->bindValue(1, $pessoa->getNome());
+
+                $stm->execute();
+                //fecha a conexão
+                $this->db = null;
+                return "Pessoa deletada com sucesso!";
+
+            } catch(PDOException $e){
+                $this->db = null;
+                return "Problema ao deletar pessoa";
+            }
+        }
+
+        public function listar(){
+                $sql = "SELECT nome FROM pessoa";
+                $stm = $this->db->prepare($sql);
+                $stm->execute();
+
+                // transforma os dados do banco, em um array associativo
+                return $stm->fetchAll(PDO::FETCH_ASSOC);
         }
     }
 ?>

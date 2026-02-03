@@ -1,0 +1,7 @@
+CREATE DATABASE base;
+
+CREATE TABLE pessoa(
+ 	nome VARCHAR(255)
+);
+
+SELECT * FROM pessoa;
