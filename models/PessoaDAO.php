@@ -55,5 +55,24 @@
                 // transforma os dados do banco, em um array associativo
                 return $stm->fetchAll(PDO::FETCH_ASSOC);
         }
+
+        public function update($pessoa, $nome){
+                try{
+                    $sql = "UPDATE pessoa SET nome = ? WHERE nome = ?";
+                    $stm = $this->db->prepare($sql);
+                    $stm->bindValue(1, $pessoa->getNome());
+                    $stm->bindValue(2, $nome->getNome());
+
+                    $stm->execute();
+
+                    //fecha a conexão
+                    $this->db = null;
+                    return "Pessoa alterada com sucesso!";
+
+                } catch(PDOException $e){
+                    $this->db = null;
+                    return "Problema ao alterar pessoa";
+                }
+        }
     }
 ?>
